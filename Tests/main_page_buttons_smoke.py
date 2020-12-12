@@ -82,16 +82,6 @@ class MainMenuSmokeTests(unittest.TestCase):
         self.assertEqual(9, len(xpath_item_list),
                          f'Actual number of categories on main page: {len(xpath_item_list)} diifer from expected')
 
-    def checking_link_function(self, driver, base_URL, destination_end, xpath, xpath_number=None):
-        destination_url = base_URL + destination_end
-        if xpath_number is not None:
-            xpath_element = driver.find_elements_by_xpath(xpath)[xpath_number]
-        else:
-            xpath_element = driver.find_element_by_xpath(xpath)
-        xpath_element.click()
-        self.assertEqual(destination_url, driver.current_url,
-                         f'Incorrect forwarding. Actual url: {driver.current_url} differ from expected: {destination_url}')
-
     def test_hover_menu_links(self):
         base_url = 'https://www.morele.net/'
         driver = self.driver
