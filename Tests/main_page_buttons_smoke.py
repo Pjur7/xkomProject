@@ -1,9 +1,15 @@
+import selenium
 from selenium import webdriver
 import unittest
 import time
 from common_function.start_config import chrome_options_setup as setup_opt
 from common_function.additional_functions import log_in_function as log_funct
 from common_function.additional_functions import checking_link_function as check_link
+
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+
 from selenium.webdriver.chrome.service import Service
 
 
@@ -91,53 +97,70 @@ class MainMenuSmokeTests(unittest.TestCase):
         len_categories = len(categories)
         print(len_categories)
         for category in range(len_categories):
-            # category_text = category.get_attribute('innerText')
-            categories_it = driver.find_elements_by_xpath('//ul[@class = "cn-current-departments cn-level"]/li')[
+            driver.get(base_url)
+            try:
+                categories_it = driver.find_elements_by_xpath('//ul[@class = "cn-current-departments cn-level"]/li')[
                 category]
-            if categories_it.get_attribute('innerText') == 'Laptopy':
-                subtest_name = 'Laptopy link'
-                check_link(self, driver, subtest_name, 'https://www.morele.net/', 'kategoria/laptopy-31/',
+                if categories_it.get_attribute('innerText') == 'Laptopy':
+                    subtest_name = 'Laptopy link'
+                    check_link(self, driver, subtest_name, 'https://www.morele.net/', 'kategoria/laptopy-31/',
                            '//ul[@class = "cn-current-departments cn-level"]/li', 0)
-                driver.get(base_url)
 
-            elif categories_it.get_attribute('innerText') == 'Komputery':
-                subtest_name = 'Komputery link'
-                check_link(self, driver, subtest_name, 'https://www.morele.net/', 'komputery/',
+                elif categories_it.get_attribute('innerText') == 'Komputery':
+                    # driver.get(base_url)
+                    subtest_name = 'Komputery link'
+                    check_link(self, driver, subtest_name, 'https://www.morele.net/', 'komputery/',
                            '//ul[@class = "cn-current-departments cn-level"]/li', 1)
-                driver.get(base_url)
-            elif categories_it.get_attribute('innerText') == 'Gaming':
-                subtest_name = 'Gaming link'
-                check_link(self, driver, subtest_name, 'https://www.morele.net/', 'gaming/',
-                           '//ul[@class = "cn-current-departments cn-level"]/li', 2)
-                driver.get(base_url)
 
-            elif categories_it.get_attribute('innerText') == 'Telefony i tablety':
-                subtest_name = 'Telefony link'
-                check_link(self, driver, subtest_name, 'https://www.morele.net/', 'telefony/',
+                elif categories_it.get_attribute('innerText') == 'Gaming':
+                    # driver.get(base_url)
+                    subtest_name = 'Gaming link'
+                    check_link(self, driver, subtest_name, 'https://www.morele.net/', 'gaming/',
+                           '//ul[@class = "cn-current-departments cn-level"]/li', 2)
+
+                elif categories_it.get_attribute('innerText') == 'Telefony i tablety':
+                    # driver.get(base_url)
+                    subtest_name = 'Telefony link'
+                    check_link(self, driver, subtest_name, 'https://www.morele.net/', 'telefony/',
                            '//ul[@class = "cn-current-departments cn-level"]/li', 3)
-                driver.get(base_url)
-            elif categories_it.get_attribute('innerText') == 'Telewizory i audio':
-                subtest_name = 'Telewizory, audio link'
-                check_link(self, driver, subtest_name, 'https://www.morele.net/', 'telewizory-i-audio/',
+
+                elif categories_it.get_attribute('innerText') == 'Telewizory i audio':
+                    # driver.get(base_url)
+                    subtest_name = 'Telewizory, audio link'
+                    check_link(self, driver, subtest_name, 'https://www.morele.net/', 'telewizory-i-audio/',
                            '//ul[@class = "cn-current-departments cn-level"]/li', 4)
-                driver.get(base_url)
-            elif categories_it.get_attribute('innerText') == 'AGD':
-                subtest_name = 'AGD link'
-                check_link(self, driver, subtest_name, 'https://www.morele.net/', 'agd/',
+
+                elif categories_it.get_attribute('innerText') == 'AGD':
+                    # driver.get(base_url)
+                    subtest_name = 'AGD link'
+                    check_link(self, driver, subtest_name, 'https://www.morele.net/', 'agd/',
                            '//ul[@class = "cn-current-departments cn-level"]/li', 5)
-                driver.get(base_url)
-            elif categories_it.get_attribute('innerText') == 'Foto i kamery':
-                subtest_name = 'Foto i kamery link'
-                check_link(self, driver, subtest_name, 'https://www.morele.net/', 'foto-i-kamery/',
+
+                elif categories_it.get_attribute('innerText') == 'Foto i kamery':
+                    # driver.get(base_url)
+                    subtest_name = 'Foto i kamery link'
+                    check_link(self, driver, subtest_name, 'https://www.morele.net/', 'foto-i-kamery/',
                            '//ul[@class = "cn-current-departments cn-level"]/li', 6)
-                driver.get(base_url)
-            elif categories_it.get_attribute('innerText') == 'Biuro':
-                subtest_name = 'Biuro link'
-                check_link(self, driver, subtest_name, 'https://www.morele.net/', 'biuro/',
+
+                elif categories_it.get_attribute('innerText') == 'Biuro':
+                    # driver.get(base_url)
+                    subtest_name = 'Biuro link'
+                    check_link(self, driver, subtest_name, 'https://www.morele.net/', 'biuro/',
                            '//ul[@class = "cn-current-departments cn-level"]/li', 7)
-                driver.get(base_url)
-            elif categories_it.get_attribute('innerText') == 'Sport i rekreacja':
-                subtest_name = 'Sport i rekreacja link'
-                check_link(self, driver, subtest_name, 'https://www.morele.net/', 'sport-i-rekreacja/',
+
+                elif categories_it.get_attribute('innerText') == 'Sport i rekreacja':
+                    # driver.get(base_url)
+                    subtest_name = 'Sport i rekreacja link'
+                    check_link(self, driver, subtest_name, 'https://www.morele.net/', 'sport-i-rekreacja/',
                            '//ul[@class = "cn-current-departments cn-level"]/li', 8)
-                driver.get(base_url)
+
+            except selenium.common.exceptions.NoSuchElementException as error:
+                print('No such element exception!')
+                print(error)
+            except selenium.common.exceptions.TimeoutException as error:
+                print('Timeout exception!')
+                print(error)
+
+
+
+

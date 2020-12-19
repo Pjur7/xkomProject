@@ -3,6 +3,10 @@ from selenium.webdriver.common.keys import Keys
 
 
 def log_in_function(driver):
+    """
+
+    :param driver:
+    """
     login = 'pa.jur7@gmail.com'  # przenieść jako parametry funkcji
     passwd = 'Multitesty7-7'
     xpath_input_username = '//input[@id="username"]'
@@ -15,6 +19,16 @@ def log_in_function(driver):
 
 
 def checking_link_function(self, driver, subtest_name, base_URL, destination_end, xpath, xpath_number=None):
+    """
+
+    :param self:
+    :param driver:
+    :param subtest_name:
+    :param base_URL:
+    :param destination_end:
+    :param xpath:
+    :param xpath_number:
+    """
     destination_url = base_URL + destination_end
     if xpath_number is not None:
         xpath_element = driver.find_elements_by_xpath(xpath)[xpath_number]
