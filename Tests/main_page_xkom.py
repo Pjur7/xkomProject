@@ -105,7 +105,7 @@ class MainMenuSmokeTests(unittest.TestCase):
             try:
                 categories_it = driver.find_elements_by_xpath('//ul[@class = "sc-1ktmy3g-2 cebzfU"]/li/div/div')[
                     category]
-                // *[ @ id = "app-TopBar"] / div / header / div[2] / div / div / div / nav / ul / li[4] / a / div[2]
+                 # *[ @ id = "app-TopBar"] / div / header / div[2] / div / div / div / nav / ul / li[4] / a / div[2]
                 if categories_it.get_attribute('innerText') == 'Laptopy i komputery':
                     subtest_name = 'Laptopy link'
                     check_link(self, driver, subtest_name, 'https://www.x-kom.pl/', 'g/2-laptopy-i-komputery.html',
