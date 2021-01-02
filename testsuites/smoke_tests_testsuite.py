@@ -1,14 +1,15 @@
 import unittest
-from unittest.loader import makeSuite
-
-from Tests import main_page_buttons_smoke
+from Tests.main_page_buttons_smoke import MainMenuSmokeTests
 
 
-def smoke_tests():
+
+
+def smoke_suite():
     test_suite = unittest.TestSuite()
-    test_suite.addTest(makeSuite(main_page_buttons_smoke))
+    test_suite.addTest(unittest.makeSuite(MainMenuSmokeTests))
+
     return test_suite
 
 
 runner = unittest.TextTestRunner(verbosity=2)
-runner.run(smoke_tests())
+runner.run(smoke_suite())
