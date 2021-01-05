@@ -2,22 +2,9 @@ import time
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-
-
-def log_in_function(driver): # do testow morele.net
-    """
-
-    :param driver:
-    """
-    login = 'pa.jur7@gmail.com'  # przenieść jako parametry funkcji
-    passwd = 'Multitesty7-7'
-    xpath_input_username = '//input[@id="username"]'
-    xpath_input_passwd = '//input[@id="password-log"]'
-    input_username = driver.find_element_by_xpath(xpath_input_username)
-    input_password = driver.find_element_by_xpath(xpath_input_passwd)
-    input_username.send_keys(login)
-    input_password.send_keys(passwd)
-    input_password.send_keys(Keys.ENTER)
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 
 
 def input_login_data(driver, login, password):
@@ -38,8 +25,8 @@ def input_login_data(driver, login, password):
     # input_password.send_keys(Keys.ENTER)
 
 
-
-def checking_link_function(self, driver, subtest_name, base_URL,  xpath, destination_end=None, destinationURL = None, xpath_number=None):
+def check_link_function(self, driver, subtest_name, base_URL, xpath, destination_end=None, destination=None,
+                        xpath_number=None):
     """
     checking if given element in xpath forwarding to correct subpage
 
@@ -53,8 +40,8 @@ def checking_link_function(self, driver, subtest_name, base_URL,  xpath, destina
     """
     if destination_end is not None:
         destination_url = base_URL + destination_end
-    if destinationURL is not None:
-        destination_url = destinationURL
+    if destination is not None:
+        destination_url = destination
     if xpath_number is not None:
         xpath_element = driver.find_elements_by_xpath(xpath)[xpath_number]
     if xpath_number is None:
@@ -64,3 +51,9 @@ def checking_link_function(self, driver, subtest_name, base_URL,  xpath, destina
     with self.subTest(subtest_name):
         self.assertEqual(destination_url, driver.current_url,
                          f'Incorrect forwarding. Actual url: {driver.current_url} differ from expected: {destination_url}')
+
+
+def wait_for_element(driver, xpath_element):
+    wait = WebDriverWait(driver, 10)
+    element_to_wait = wait.until(EC.visibility_of_element_located((By.XPATH, xpath_element)))
+    return element_to_wait

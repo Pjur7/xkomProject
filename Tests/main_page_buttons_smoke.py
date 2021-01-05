@@ -2,9 +2,8 @@ import selenium
 import unittest
 import time
 from common_function.start_config import chrome_options_setup as setup_opt
-from common_function.additional_functions import log_in_function as log_funct
 from common_function.additional_functions import input_login_data
-from common_function.additional_functions import checking_link_function as check_link
+from common_function.additional_functions import check_link_function as check_link
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -91,7 +90,7 @@ class MainMenuSmokeTests(unittest.TestCase):
         self.assertEqual(8, len(xpath_item_list),
                          f'Actual number of categories on main page: {len(xpath_item_list)} diifer from expected')
 
-    def test_hover_menu_links(self):
+    def test_main_categories_menu_links(self):
         base_url = 'https://www.x-kom.pl/'
         driver = self.driver
         driver.get(base_url)
