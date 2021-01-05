@@ -1,5 +1,5 @@
 import unittest
-from Tests.main_page_buttons_smoke import MainMenuSmokeTests
+from Tests.morele_main_page_buttons_smoke import MainMenuSmokeTests
 
 
 
