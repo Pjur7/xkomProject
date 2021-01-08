@@ -1,9 +1,14 @@
 import selenium
 import unittest
 import time
+
+from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
+
+from common_function.screenshots_funtion import ScreenshotListener
 from common_function.start_config import chrome_options_setup as setup_opt
 from common_function.additional_functions import input_login_data
 from common_function.additional_functions import check_link_function as check_link
+from common_function.additional_functions import screenshot_decorator
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -18,6 +23,7 @@ class MainMenuSmokeTests(unittest.TestCase):
     # def setUpClass(self):
     def setUp(self):  # otwiera każdy test w nowym oknie i zamyka okno po tescie
         self.driver = setup_opt(self, 1)
+        self.ef_driver = EventFiringWebDriver(self.driver, ScreenshotListener())
 
     def tearDown(self):
         self.driver.quit()
@@ -41,14 +47,16 @@ class MainMenuSmokeTests(unittest.TestCase):
                          f'Incorrect forwarding. Actual url: {driver.current_url} differ from expected: {destination_url}')
 
     # nie zalogowany użytkownik:
+    @screenshot_decorator
     def test_shopping_list_button(self):
         base_url = 'https://www.x-kom.pl/'  # zmienić na uruchamianie z common_function
-        driver = self.driver
+        driver = self.ef_driver
         driver.get(base_url)
         xpath_to_shop_list_element = \
             driver.find_element_by_xpath('//*[@id="app-TopBar"]/div/header/div[1]/div[4]/div/div[3]/div/a')
         xpath_to_shop_list_element.click()
         destination_url = base_url + 'listy'
+        time.sleep(2)
         if driver.current_url == 'https://www.x-kom.pl/logowanie':
             input_login_data(driver, 'pa.jur7@gmail.com',
                                  'Multitesty7-7')  # using function to input username and password

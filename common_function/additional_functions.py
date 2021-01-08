@@ -1,10 +1,12 @@
 import time
 
 from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from common_function.screenshots_funtion import make_screenshot
 
 
 def input_login_data(driver, login, password):
@@ -57,3 +59,19 @@ def wait_for_element(driver, xpath_element):
     wait = WebDriverWait(driver, 10)
     element_to_wait = wait.until(EC.visibility_of_element_located((By.XPATH, xpath_element)))
     return element_to_wait
+
+
+def screenshot_decorator(test_function):
+    def wrapper(self):
+        try:
+            return test_function(self)
+        except AssertionError as assrt_ex:
+            # screenshot_listener = ScreenshotListener()
+            # screenshot_listener.on_exception(assert_err, self.ef_driver) # lub skrócić: ScreenshotListener().on_exception(assert_err, self.ef_driver)
+            make_screenshot(self.ef_driver, 'assert')
+            raise assrt_ex
+        except TimeoutException as time_ex:
+            make_screenshot(self.ef_driver, 'timeout')
+            raise time_ex
+
+    return wrapper
