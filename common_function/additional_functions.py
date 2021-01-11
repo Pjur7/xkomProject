@@ -57,7 +57,8 @@ def check_link_function(self, driver, subtest_name, base_URL, xpath, destination
 
 def wait_for_element(driver, xpath_element):
     wait = WebDriverWait(driver.wrapped_driver, 10)
-    element_to_wait = wait.until(EC.visibility_of_element_located((By.XPATH, xpath_element)), 'Timeout, element not located on time!')
+    element_to_wait = wait.until(EC.visibility_of_element_located((By.XPATH, xpath_element)),
+                                 'Timeout, element not located on time!')
     return element_to_wait
 
 
@@ -73,5 +74,48 @@ def screenshot_decorator(test_function):
         except TimeoutException as time_ex:
             make_screenshot(self.ef_driver, 'timeout')
             raise time_ex
+        except self.failureException as failure_ex:
+            make_screenshot(self.ef_driver, 'assertion')
+            raise failure_ex
+        except self._baseAssertEqual as base_assert:
+            make_screenshot(self.ef_driver, 'assertion')
+            raise base_assert
 
     return wrapper
+
+
+def search_function(self, driver, searching_phrase):
+    search_input_element = driver.find_element_by_xpath('//input[@placeholder="Czego szukasz?"]')
+    # searching_phrase = 'logitech wireless'
+    search_input_element.send_keys(searching_phrase)
+    search_input_element.send_keys(Keys.ENTER)
+    searching_phrases_list = searching_phrase.split()
+    # print(searching_phrases_list[0])
+    # print(searching_phrases_list[1])
+    # print(searching_phrases_list[2])
+    first_result = wait_for_element(driver, '//*[@id="listing-container"]/div[1]/div/div[2]/div[1]/div/a/span/img')
+    if (first_result):
+        product_list = driver.find_elements_by_xpath('//a[@class="sc-1h16fat-0 dEoadv"]/h3')
+        for product in product_list:
+            product_text = product.text.lower()
+            # print(product_text)
+            # subtest_name = 'product name ' + str(product_list.index(product))
+            subtest_name = product_text
+            logic_value = 0
+            with self.subTest(subtest_name):
+                for phrase in searching_phrases_list:
+                    # print(str(searching_phrases_list.index(phrase)))
+                    if phrase in product_text:
+                        logic_value = logic_value + 1
+                    else:
+                        logic_value = logic_value + 0
+                try:
+                    self.assertGreaterEqual(logic_value, 1,
+                                            f'Product in results does not match for searching phrase: {searching_phrase} ')
+                except AssertionError as assert_err:
+                    sub_assert_name = str('assert_search_failed')+str(searching_phrase)
+                    make_screenshot(driver, sub_assert_name)
+                    raise assert_err
+
+    else:
+        print('No results!')

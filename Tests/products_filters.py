@@ -1,8 +1,4 @@
-import string
 
-from re import split
-
-import selenium
 import unittest
 import time
 
@@ -14,6 +10,8 @@ from common_function.start_config import chrome_options_setup as setup_opt
 from common_function.additional_functions import input_login_data, screenshot_decorator
 from common_function.additional_functions import check_link_function as check_link
 from common_function.additional_functions import wait_for_element
+from common_function.additional_functions import search_function
+from common_function.screenshots_funtion import make_screenshot
 
 
 class ProductFiltersTests(unittest.TestCase):
@@ -84,20 +82,40 @@ class ProductFiltersTests(unittest.TestCase):
         # searching_phrase = 'aoisas'
         search_input_element.send_keys(searching_phrase)
         search_input_element.send_keys(Keys.ENTER)
-        first_result = wait_for_element(driver, '//*[@id="listing-container"]/div[1]/div/div[2]/div[1]/div/a/span/img')
-        if (first_result):
-            product_list = driver.find_elements_by_xpath('//a[@class="sc-1h16fat-0 dEoadv"]/h3')
-            for product in product_list:
-                product_text = product.text.lower()
-                # print(product_text)
-                subtest_name = 'product name ' + str(product_list.index(product))
-                with self.subTest(subtest_name):
-                    if ('logitech' in product_text) and ('wireless' in product_text):
-                        logic_value = 1
-                    else:
-                        logic_value = 0
-                    self.assertEqual(1,logic_value, f'Product in results does not match for searching phrase: {searching_phrase} ')
+        # first_result = wait_for_element(driver, '//*[@id="listing-container"]/div[1]/div/div[2]/div[1]/div/a/span/img')
+        # if (first_result):
+        time.sleep(2)
+        product_list = driver.find_elements_by_xpath('//a[@class="sc-1h16fat-0 dEoadv"]/h3')
+        for product in product_list:
+            product_text = product.text.lower()
+            # print(product_text)
+            subtest_name = 'product name ' + str(product_list.index(product))
 
-        else:
-            print('No results!')
+            with self.subTest(subtest_name):
+                if ('logitechsd' in product_text) and ('wireless' in product_text):
+                    logic_value = 1
+                else:
+                    logic_value = 0
+                try:
 
+                    self.assertEqual(0, logic_value, f'Product in results does not match for searching phrase: {searching_phrase} ')
+                except AssertionError as assert_err:
+                    make_screenshot(driver, 'assertion_search_failed')
+                    raise assert_err
+
+        # else:
+        #     print('No results!')
+
+    @screenshot_decorator
+    def test_search_logitech_wireless(self):
+        base_url = 'https://www.x-kom.pl/'
+        driver = self.ef_driver
+        driver.get(base_url)
+        search_function(self, driver, 'logitech wireless')
+
+    @screenshot_decorator
+    def test_search_procesor_ryzen(self):
+        base_url = 'https://www.x-kom.pl/'
+        driver = self.ef_driver
+        driver.get(base_url)
+        search_function(self, driver, 'procesor amd ryzen')
