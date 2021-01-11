@@ -20,7 +20,7 @@ def input_login_data(driver, login, password):
 
     xpath_input_username = '//*[@id="app"]/div/div[1]/div/div[1]/div/form/div[1]/label/input'
     xpath_input_passwd = '//*[@id="app"]/div/div[1]/div/div[1]/div/form/div[2]/div/label/input'
-    input_username = driver.find_element_by_xpath(xpath_input_username)
+    input_username = wait_for_element(driver, xpath_input_username)
     input_password = driver.find_element_by_xpath(xpath_input_passwd)
     input_username.send_keys(login)
     input_password.send_keys(password)
@@ -56,8 +56,8 @@ def check_link_function(self, driver, subtest_name, base_URL, xpath, destination
 
 
 def wait_for_element(driver, xpath_element):
-    wait = WebDriverWait(driver, 10)
-    element_to_wait = wait.until(EC.visibility_of_element_located((By.XPATH, xpath_element)))
+    wait = WebDriverWait(driver.wrapped_driver, 10)
+    element_to_wait = wait.until(EC.visibility_of_element_located((By.XPATH, xpath_element)), 'Timeout, element not located on time!')
     return element_to_wait
 
 
