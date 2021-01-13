@@ -1,13 +1,13 @@
 import selenium
 import unittest
 import time
+
+from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
+from common_function.screenshots_funtion import ScreenshotListener
 from common_function.start_config import chrome_options_setup as setup_opt
-from common_function.additional_functions import input_login_data
+from common_function.additional_functions import input_login_data, screenshot_decorator
 from common_function.additional_functions import check_link_function as check_link
 from Tests.main_page_buttons_smoke import MainMenuSmokeTests
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
 from common_function.additional_functions import wait_for_element
 
 
@@ -17,17 +17,19 @@ class LogInTests(unittest.TestCase):
     # def setUpClass(self):
     def setUp(self):  # otwiera każdy test w nowym oknie i zamyka okno po tescie
         self.driver = setup_opt(self, 1)
+        self.ef_driver = EventFiringWebDriver(self.driver, ScreenshotListener())
         # self.service = Service('C:\TestFiles\chromedriver.exe')
 
     def tearDown(self):
         self.driver.quit()
 
+    @screenshot_decorator
     def test_correct_login_from_mainPage(self):
         # siging in with correct user and password; test starts from main page (https://www.x-kom.pl)
         login = 'pa.jur7@gmail.com'
         password = 'Multitesty7-7'
         login_url = 'https://www.x-kom.pl/logowanie'
-        driver = self.driver
+        driver = self.ef_driver
         # 1st subtest:
         with self.subTest('Your account button'):
             MainMenuSmokeTests.test_login_button(self)
@@ -36,11 +38,12 @@ class LogInTests(unittest.TestCase):
         check_link(self, driver, 'correct login data', login_url, '//button[@type="submit"]', None,
                    'https://www.x-kom.pl/', None)
 
+    @screenshot_decorator
     def test_incorrect_login(self):
         # signing in with incorrect user data
         login = 'pa'
         password = 'Multi'
-        driver = self.driver
+        driver = self.ef_driver
         # 1st subtest:
         with self.subTest('your account button'):
             MainMenuSmokeTests.test_login_button(self)

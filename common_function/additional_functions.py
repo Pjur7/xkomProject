@@ -74,12 +74,12 @@ def screenshot_decorator(test_function):
         except TimeoutException as time_ex:
             make_screenshot(self.ef_driver, 'timeout')
             raise time_ex
-        except self.failureException as failure_ex:
-            make_screenshot(self.ef_driver, 'assertion')
-            raise failure_ex
-        except self._baseAssertEqual as base_assert:
-            make_screenshot(self.ef_driver, 'assertion')
-            raise base_assert
+        # except self.failureException as failure_ex:
+        #     make_screenshot(self.ef_driver, 'assertion')
+        #     raise failure_ex
+        # except self._baseAssertEqual as base_assert:
+        #     make_screenshot(self.ef_driver, 'assertion')
+        #     raise base_assert
 
     return wrapper
 

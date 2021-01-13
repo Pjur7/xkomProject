@@ -44,7 +44,7 @@ class ProductFiltersTests(unittest.TestCase):
 
         # 4th subtest: lenovo filter - checking results
         product_list_xpath = driver.find_elements_by_xpath('//a[@class="sc-1h16fat-0 dEoadv"]/h3/span')
-        time.sleep(1)
+        time.sleep(2)
         for product in product_list_xpath:
             product_text = product.text
             # print(product_text)
@@ -72,50 +72,18 @@ class ProductFiltersTests(unittest.TestCase):
             with self.subTest(subtest_name):
                 self.assertLessEqual(price_float, 2500, f'actual product price: {price_float} is greater than 2500')
 
-    @screenshot_decorator
-    def test_search(self):
-        base_url = 'https://www.x-kom.pl/'
-        driver = self.ef_driver
-        driver.get(base_url)
-        search_input_element = driver.find_element_by_xpath('//input[@placeholder="Czego szukasz?"]')
-        searching_phrase = 'logitech wireless'
-        # searching_phrase = 'aoisas'
-        search_input_element.send_keys(searching_phrase)
-        search_input_element.send_keys(Keys.ENTER)
-        # first_result = wait_for_element(driver, '//*[@id="listing-container"]/div[1]/div/div[2]/div[1]/div/a/span/img')
-        # if (first_result):
-        time.sleep(2)
-        product_list = driver.find_elements_by_xpath('//a[@class="sc-1h16fat-0 dEoadv"]/h3')
-        for product in product_list:
-            product_text = product.text.lower()
-            # print(product_text)
-            subtest_name = 'product name ' + str(product_list.index(product))
 
-            with self.subTest(subtest_name):
-                if ('logitechsd' in product_text) and ('wireless' in product_text):
-                    logic_value = 1
-                else:
-                    logic_value = 0
-                try:
 
-                    self.assertEqual(0, logic_value, f'Product in results does not match for searching phrase: {searching_phrase} ')
-                except AssertionError as assert_err:
-                    make_screenshot(driver, 'assertion_search_failed')
-                    raise assert_err
-
-        # else:
-        #     print('No results!')
-
-    @screenshot_decorator
-    def test_search_logitech_wireless(self):
-        base_url = 'https://www.x-kom.pl/'
-        driver = self.ef_driver
-        driver.get(base_url)
-        search_function(self, driver, 'logitech wireless')
-
-    @screenshot_decorator
-    def test_search_procesor_ryzen(self):
-        base_url = 'https://www.x-kom.pl/'
-        driver = self.ef_driver
-        driver.get(base_url)
-        search_function(self, driver, 'procesor amd ryzen')
+    # @screenshot_decorator
+    # def test_search_logitech_wireless(self):
+    #     base_url = 'https://www.x-kom.pl/'
+    #     driver = self.ef_driver
+    #     driver.get(base_url)
+    #     search_function(self, driver, 'logitech wireless')
+    #
+    # @screenshot_decorator
+    # def test_search_procesor_ryzen(self):
+    #     base_url = 'https://www.x-kom.pl/'
+    #     driver = self.ef_driver
+    #     driver.get(base_url)
+    #     search_function(self, driver, 'procesor amd ryzen')
