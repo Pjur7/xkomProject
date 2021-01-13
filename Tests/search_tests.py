@@ -8,7 +8,7 @@ from common_function.additional_functions import search_function
 
 
 class SearchbyPhrasesTests(unittest.TestCase):
-    def setUp(self):  # otwiera każdy test w nowym oknie i zamyka okno po tescie
+    def setUp(self):  
         self.driver = setup_opt(self, 1)
         self.ef_driver = EventFiringWebDriver(self.driver, ScreenshotListener())
 
@@ -28,3 +28,7 @@ class SearchbyPhrasesTests(unittest.TestCase):
         driver = self.ef_driver
         driver.get(base_url)
         search_function(self, driver, 'procesor amd ryzen')
+
+#
+# if __name__ == "__main__":
+#     unittest.main()

@@ -1,6 +1,4 @@
 import time
-
-from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
@@ -47,7 +45,8 @@ def check_link_function(self, driver, subtest_name, base_URL, xpath, destination
     if xpath_number is not None:
         xpath_element = driver.find_elements_by_xpath(xpath)[xpath_number]
     if xpath_number is None:
-        xpath_element = driver.find_element_by_xpath(xpath)
+        xpath_element = wait_for_element(driver, xpath)
+        # xpath_element = driver.find_element_by_xpath(xpath)
     xpath_element.click()
     time.sleep(1)
     with self.subTest(subtest_name):
@@ -119,3 +118,4 @@ def search_function(self, driver, searching_phrase):
 
     else:
         print('No results!')
+

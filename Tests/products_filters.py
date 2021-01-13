@@ -1,17 +1,11 @@
 
 import unittest
 import time
-
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
-
 from common_function.screenshots_funtion import ScreenshotListener
 from common_function.start_config import chrome_options_setup as setup_opt
 from common_function.additional_functions import input_login_data, screenshot_decorator
 from common_function.additional_functions import check_link_function as check_link
-from common_function.additional_functions import wait_for_element
-from common_function.additional_functions import search_function
-from common_function.screenshots_funtion import make_screenshot
 
 
 class ProductFiltersTests(unittest.TestCase):
