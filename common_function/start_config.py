@@ -17,9 +17,5 @@ def chrome_options_setup(self, option):
 
 
 def start_main_page(self):
-    self.mainPage_url = 'https://www.morele.net/'
+    self.mainPage_url = 'https://www.x-kom.pl'
 
-
-    # @classmethod
-    # def setUpClass(self):
-    #     self.driver = webdriver.Chrome(executable_path=r'C:\TestFiles\chromedriver.exe')

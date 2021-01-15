@@ -7,7 +7,7 @@ from selenium.webdriver.support.abstract_event_listener import AbstractEventList
 import selenium
 
 
-class ScreenshotListener(AbstractEventListener):  # do opakowania drivera+robienie screenow
+class ScreenshotListener(AbstractEventListener):
 
     def on_exception(self, exception, driver):
         make_screenshot(driver, 'driver')

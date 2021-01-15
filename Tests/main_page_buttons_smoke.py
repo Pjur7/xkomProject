@@ -11,18 +11,13 @@ from common_function.additional_functions import check_link_function as check_li
 from common_function.additional_functions import screenshot_decorator
 from common_function.additional_functions import wait_for_element
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-
-from selenium.webdriver.chrome.service import Service
 
 
 class MainMenuSmokeTests(unittest.TestCase):
 
     # @classmethod
     # def setUpClass(self):
-    def setUp(self):  # otwiera każdy test w nowym oknie i zamyka okno po tescie
+    def setUp(self):  # each test in separate window
         self.driver = setup_opt(self, 1)
         self.ef_driver = EventFiringWebDriver(self.driver, ScreenshotListener())
 
@@ -47,7 +42,7 @@ class MainMenuSmokeTests(unittest.TestCase):
         self.assertEqual(destination_url, driver.current_url,
                          f'Incorrect forwarding. Actual url: {driver.current_url} differ from expected: {destination_url}')
 
-    # nie zalogowany użytkownik:
+
     @screenshot_decorator
     def test_shopping_list_button(self):
         base_url = 'https://www.x-kom.pl/'  # zmienić na uruchamianie z common_function
@@ -72,7 +67,7 @@ class MainMenuSmokeTests(unittest.TestCase):
         driver = self.ef_driver
         destination_url = base_url + 'centrum-pomocy'
         driver.get(base_url)
-        xpath_to_contact_button = driver.find_element_by_xpath(
+        xpath_to_contact_button = wait_for_element(driver,
             '//*[@id="app-TopBar"]/div/header/div[1]/div[4]/div/div[1]/div/div[1]/a/div[1]/span')
         xpath_to_contact_button.click()
         self.assertEqual(destination_url, driver.current_url,

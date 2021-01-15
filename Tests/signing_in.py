@@ -1,7 +1,5 @@
 import selenium
 import unittest
-import time
-
 from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
 from common_function.screenshots_funtion import ScreenshotListener
 from common_function.start_config import chrome_options_setup as setup_opt
