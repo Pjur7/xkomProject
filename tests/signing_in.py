@@ -4,7 +4,7 @@ from common_function.screenshots_funtion import ScreenshotListener
 from common_function.start_config import chrome_options_setup as setup_opt
 from common_function.additional_functions import input_login_data, screenshot_decorator
 from common_function.additional_functions import check_link_function as check_link
-from Tests.main_page_buttons_smoke import MainMenuSmokeTests
+from tests.main_page_buttons_smoke import MainMenuSmokeTests
 from common_function.additional_functions import wait_for_element
 
 

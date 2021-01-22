@@ -1,8 +1,8 @@
 import unittest
-from Tests.main_page_buttons_smoke import MainMenuSmokeTests
-from Tests.products_filters import ProductFiltersTests
-from Tests.signing_in import LogInTests
-from Tests.search_tests import SearchbyPhrasesTests
+from tests.main_page_buttons_smoke import MainMenuSmokeTests
+from tests.products_filters import ProductFiltersTests
+from tests.signing_in import LogInTests
+from tests.search_tests import SearchbyPhrasesTests
 
 
 def sanity_suite():
