@@ -23,12 +23,14 @@ class ProductFiltersTests(unittest.TestCase):
         driver.get(base_url)
         laptop_button_xpath = '//*[@id="app-TopBar"]/div/header/div[2]/div/div/div/nav/ul/li[1]/a'
         laptop_subcategory_xpath = '//span[@title="Laptopy/Notebooki/Ultrabooki"]'
-        lenovo_filters_xpath = '//*[@id="listing-filters"]/div[2]/div/section[1]/div[1]/div/label/span[2]/span/span[1]'
+        # lenovo_filters_xpath = '//*[@id="listing-filters"]/div[2]/div/section[1]/div[1]/div/label/span[2]/span/span[1]'
+        lenovo_filters_xpath = '//*[@id="listing-filters"]/div[2]/div/section[1]/div[2]/div/label/span[' \
+                                   '2]/span/span[1] '
         # 1st subtest: laptopy i komputery link
         check_link(self, driver, 'laptop link', 'https://www.x-kom.pl/', laptop_button_xpath,
                    'g/2-laptopy-i-komputery.html', None)
 
-        # 2nd subtest: laptopu/notebooi/ultrabooki subcategory link
+        # 2nd subtest: laptopy/notebooki/ultrabooki subcategory link
         check_link(self, driver, 'laptop subcategory link', driver.current_url, laptop_subcategory_xpath,
                    None, 'https://www.x-kom.pl/g-2/c/159-laptopy-notebooki-ultrabooki.html', 0)
 
@@ -51,7 +53,7 @@ class ProductFiltersTests(unittest.TestCase):
         # 5th subtest: setting price range (0, 2500):
         input_price_to = driver.find_element_by_xpath('//div/input[@placeholder="do"]')
         products_price = driver.find_elements_by_xpath('//div/span[@class="sc-6n68ef-0 sc-6n68ef-3 iertXt"]')
-        value = '2500'
+        value = 2500
         input_price_to.send_keys(value)
         time.sleep(2)
         product_price_filtered = driver.find_elements_by_xpath('//div/span[@class="sc-6n68ef-0 sc-6n68ef-3 iertXt"]')
@@ -64,7 +66,7 @@ class ProductFiltersTests(unittest.TestCase):
             print(price_float)
             subtest_name = 'prices ' + str(product_price_filtered.index(price))
             with self.subTest(subtest_name):
-                self.assertLessEqual(price_float, 2500, f'actual product price: {price_float} is greater than 2500')
+                self.assertLessEqual(price_float, value, f'actual product price: {price_float} is greater than {value}')
 
 
 

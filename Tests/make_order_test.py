@@ -37,11 +37,11 @@ class MakeOrderClass(unittest.TestCase):
         # time.sleep(2)
         forward_to_cart_button_xpath = wait_for_element(driver, '//a[@class="sc-1h16fat-0 sc-1v4lzt5-13 goTMxD sc-153gokr-0 hjeDhx"]')
         forward_to_cart_button_xpath.click()
-        destination_url =  'https://www.x-kom.pl/koszyk'
+        destination_url = 'https://www.x-kom.pl/koszyk'
         with self.subTest('forwarding to shopping cart page'):
             self.assertIn(required_text, popup_text, f'Actual page url: {self.driver.current_url} differ from expected: {destination_url}')
         required_product_text = 'Silver Monkey Business Office Wireless Set'
         product_xpath = wait_for_element(driver, '//h3[@class="sc-160wg4d-11 cjUrMz"]')
-        product_text= product_xpath.text
+        product_text = product_xpath.text
         with self.subTest('product in shopping cart'):
             self.assertIn(required_product_text, product_text, f'Product name in cart: {product_text} differ from expected: {required_product_text}')

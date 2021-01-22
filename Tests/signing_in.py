@@ -1,4 +1,3 @@
-import selenium
 import unittest
 from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
 from common_function.screenshots_funtion import ScreenshotListener

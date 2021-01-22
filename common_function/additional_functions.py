@@ -12,11 +12,7 @@ def input_login_data(driver, login, password):
     """
     function to fill user account data with given username and password in log in form
 
-    :param password:
-    :param login:
-    :param driver:
     """
-
     xpath_input_username = '//*[@id="app"]/div/div[1]/div/div[1]/div/form/div[1]/label/input'
     xpath_input_passwd = '//*[@id="app"]/div/div[1]/div/div[1]/div/form/div[2]/div/label/input'
     input_username = wait_for_element(driver, xpath_input_username)
@@ -74,8 +70,6 @@ def screenshot_decorator(test_function):
         try:
             return test_function(self)
         except AssertionError as assrt_ex:
-            # screenshot_listener = ScreenshotListener()
-            # screenshot_listener.on_exception(assert_err, self.ef_driver) # lub skrócić: ScreenshotListener().on_exception(assert_err, self.ef_driver)
             make_screenshot(self.ef_driver, 'assert')
             raise assrt_ex
         except TimeoutException as time_ex:

@@ -3,7 +3,6 @@ import unittest
 import time
 
 from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
-
 from common_function.screenshots_funtion import ScreenshotListener
 from common_function.start_config import chrome_options_setup as setup_opt
 from common_function.additional_functions import input_login_data
@@ -87,7 +86,7 @@ class MainMenuSmokeTests(unittest.TestCase):
                          f'Incorrect forwarding. Actual url: {driver.current_url} differ from expected: {destination_url}')
 
     @screenshot_decorator
-    def test_count_hover_menu_item(self):
+    def test_count_categories_menu_item(self):
         base_url = 'https://www.x-kom.pl/'
         driver = self.ef_driver
         driver.get(base_url)
