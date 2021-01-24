@@ -19,14 +19,12 @@ def input_login_data(driver, login, password):
     input_password = driver.find_element_by_xpath(xpath_input_passwd)
     input_username.send_keys(login)
     input_password.send_keys(password)
-    # input_password.send_keys(Keys.ENTER)
 
 
 def check_link_function(self, driver, subtest_name, base_URL, xpath, destination_end=None, destination=None,
                         xpath_number=None):
     """
     checking if given element in xpath forwarding to correct subpage
-
 
     :param subtest_name: name of subtest
     :param base_URL: base url from where the test begin
@@ -58,6 +56,13 @@ def wait_for_element(driver, xpath_element):
     return element_to_wait
 
 
+def wait_for_element_notwrapped(driver, xpath_element):
+    wait = WebDriverWait(driver, 10)
+    element_to_wait = wait.until(EC.visibility_of_element_located((By.XPATH, xpath_element)),
+                                 'Timeout, element not located on time!')
+    return element_to_wait
+
+
 def wait_for_element_clickable(driver, xpath_element):
     wait = WebDriverWait(driver.wrapped_driver, 10)
     element_to_wait = wait.until(EC.frame_to_be_available_and_switch_to_it((By.XPATH, xpath_element)),
@@ -81,27 +86,24 @@ def screenshot_decorator(test_function):
 
 def search_function(self, driver, searching_phrase):
     search_input_element = driver.find_element_by_xpath('//input[@placeholder="Czego szukasz?"]')
-    # searching_phrase = 'logitech wireless'
     search_input_element.send_keys(searching_phrase)
     search_input_element.send_keys(Keys.ENTER)
     searching_phrases_list = searching_phrase.split()
-    first_result = wait_for_element(driver, '//*[@id="listing-container"]/div[1]/div/div[2]/div[1]/div/a/span/img')
-    if (first_result):
+    first_result = wait_for_element_notwrapped(driver, '//*[@id="listing-container"]/div[1]/div/div[2]/div['
+                                                       '1]/div/a/span/img')
+    if first_result:
         product_list = driver.find_elements_by_xpath('//a[@class="sc-1h16fat-0 dEoadv"]/h3')
         for product in product_list:
             product_text = product.text.lower()
-            # print(product_text)
-            # subtest_name = 'product name ' + str(product_list.index(product))
             subtest_name = product_text
             logic_value = 0
-            # actions = ActionChains(driver)
-            product_list_view_element = driver.find_elements_by_xpath('//a[@class="sc-1h16fat-0 dEoadv"]/h3')[
-                product_list.index(product)]
-            # driver.execute_script("arguments[0].scrollIntoView();", product_list_view_element)
-            # actions.move_to_element(product_list_view_element).perform()
+            product_number = (product_list.index(product)) + 1
+            product_to_scroll = driver.find_element_by_xpath('//*[@id="listing-container"]/div[%s]/div/div[2]/div['
+                                                             '2]/div[1]/a/h3/span' % product_number)
+            actions = ActionChains(driver)
+            actions.move_to_element(product_to_scroll).perform()
             with self.subTest(subtest_name):
                 for phrase in searching_phrases_list:
-                    # print(str(searching_phrases_list.index(phrase)))
                     if phrase in product_text:
                         logic_value = logic_value + 1
                     else:
@@ -109,11 +111,11 @@ def search_function(self, driver, searching_phrase):
                 try:
                     self.assertGreaterEqual(logic_value, 1,
                                             f'Product in results does not match for searching phrase: {searching_phrase} ')
-                except AssertionError as assert_err:
+                except AssertionError as error:
                     sub_assert_name = str('assert_search_failed') + str(searching_phrase)
-
                     make_screenshot(driver, sub_assert_name)
-                    raise assert_err
+                    raise error
 
-    else:
-        print('No results!')
+# driver.execute_script("arguments[0].scrollIntoView();", product_list_view_element)
+# product_list_view_element = driver.find_elements_by_xpath('//a[@class="sc-1h16fat-0 dEoadv"]/h3')[
+# product_list.index(product)]

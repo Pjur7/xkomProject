@@ -10,11 +10,19 @@ from common_function.additional_functions import wait_for_element, check_link_fu
 
 
 class MakeOrderClass(unittest.TestCase):
-    def setUp(self):
+    # def setUp(self):
+    #     self.driver = setup_opt(self, 1)
+    #     self.ef_driver = EventFiringWebDriver(self.driver, ScreenshotListener())
+    #
+    # def tearDown(self):
+    #     self.driver.quit()
+    @classmethod
+    def setUpClass(self):
         self.driver = setup_opt(self, 1)
         self.ef_driver = EventFiringWebDriver(self.driver, ScreenshotListener())
 
-    def tearDown(self):
+    @classmethod
+    def tearDownClass(self):
         self.driver.quit()
 
     @screenshot_decorator
@@ -45,3 +53,5 @@ class MakeOrderClass(unittest.TestCase):
         product_text = product_xpath.text
         with self.subTest('product in shopping cart'):
             self.assertIn(required_product_text, product_text, f'Product name in cart: {product_text} differ from expected: {required_product_text}')
+
+

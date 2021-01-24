@@ -1,10 +1,7 @@
 import time
 import allure
 from allure_commons.types import AttachmentType
-
-from selenium.webdriver.chrome import webdriver
 from selenium.webdriver.support.abstract_event_listener import AbstractEventListener
-import selenium
 
 
 class ScreenshotListener(AbstractEventListener):
@@ -18,3 +15,5 @@ def make_screenshot(driver, producer):
     driver.get_screenshot_as_file(screenshot_path)
     allure.attach(driver.get_screenshot_as_png(), name='Screenshot', attachment_type=AttachmentType.PNG)
     print(f'screenshot saved in {screenshot_path}')
+
+

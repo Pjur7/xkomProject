@@ -1,5 +1,4 @@
 import unittest
-from tests.main_page_buttons_smoke import MainMenuSmokeTests
 from tests.products_filters import ProductFiltersTests
 from tests.signing_in import LogInTests
 from tests.search_tests import SearchbyPhrasesTests
@@ -16,3 +15,4 @@ def sanity_suite():
 
 runner = unittest.TextTestRunner(verbosity=2)
 runner.run(sanity_suite())
+

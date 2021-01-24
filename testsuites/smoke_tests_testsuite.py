@@ -11,3 +11,4 @@ def smoke_suite():
 
 runner = unittest.TextTestRunner(verbosity=2)
 runner.run(smoke_suite())
+

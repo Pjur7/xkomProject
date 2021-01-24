@@ -9,23 +9,31 @@ from common_function.additional_functions import check_link_function as check_li
 
 
 class ProductFiltersTests(unittest.TestCase):
-    def setUp(self):  # otwiera każdy test w nowym oknie i zamyka okno po tescie
+    # def setUp(self):  # otwiera każdy test w nowym oknie i zamyka okno po tescie
+    #     self.driver = setup_opt(self, 1)
+    #     self.ef_driver = EventFiringWebDriver(self.driver, ScreenshotListener())
+    #
+    # def tearDown(self):
+    #     self.driver.quit()
+    @classmethod
+    def setUpClass(self):
         self.driver = setup_opt(self, 1)
         self.ef_driver = EventFiringWebDriver(self.driver, ScreenshotListener())
 
-    def tearDown(self):
+    @classmethod
+    def tearDownClass(self):
         self.driver.quit()
 
     @screenshot_decorator
-    def test_laptop_manufactor_filter(self):
+    def test_laptop_filters(self):
         base_url = 'https://www.x-kom.pl/'
         driver = self.ef_driver
         driver.get(base_url)
         laptop_button_xpath = '//*[@id="app-TopBar"]/div/header/div[2]/div/div/div/nav/ul/li[1]/a'
         laptop_subcategory_xpath = '//span[@title="Laptopy/Notebooki/Ultrabooki"]'
-        # lenovo_filters_xpath = '//*[@id="listing-filters"]/div[2]/div/section[1]/div[1]/div/label/span[2]/span/span[1]'
-        lenovo_filters_xpath = '//*[@id="listing-filters"]/div[2]/div/section[1]/div[2]/div/label/span[' \
-                                   '2]/span/span[1] '
+        lenovo_filters_xpath = '//*[@id="listing-filters"]/div[2]/div/section[1]/div[1]/div/label/span[2]/span/span[1]'
+        #lenovo_filters_xpath = '//*[@id="listing-filters"]/div[2]/div/section[1]/div[2]/div/label/span[' \
+                                  # '2]/span/span[1] '
         # 1st subtest: laptopy i komputery link
         check_link(self, driver, 'laptop link', 'https://www.x-kom.pl/', laptop_button_xpath,
                    'g/2-laptopy-i-komputery.html', None)
@@ -63,7 +71,7 @@ class ProductFiltersTests(unittest.TestCase):
             price_value_without_zl = str(price_value[0]) + str(price_value[1])
             price_with_point = price_value_without_zl.replace(',', '.')
             price_float = float(price_with_point)
-            print(price_float)
+            # print(price_float)
             subtest_name = 'prices ' + str(product_price_filtered.index(price))
             with self.subTest(subtest_name):
                 self.assertLessEqual(price_float, value, f'actual product price: {price_float} is greater than {value}')
