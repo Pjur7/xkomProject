@@ -12,13 +12,6 @@ from common_function.additional_functions import wait_for_element
 
 class MainMenuSmokeTests(unittest.TestCase):
 
-    # def setUp(self):
-    #     self.driver = setup_opt(self, 1)
-    #     self.ef_driver = EventFiringWebDriver(self.driver, ScreenshotListener())
-    #
-    # def tearDown(self):
-    #     self.driver.quit()
-
     @classmethod
     def setUpClass(self):
         self.driver = setup_opt(self, 1)
@@ -34,9 +27,7 @@ class MainMenuSmokeTests(unittest.TestCase):
         base_url = 'https://www.x-kom.pl/'
         destination_url = base_url + 'logowanie'
         driver.get(base_url)
-        xpath_to_login_element = \
-            driver.find_element_by_xpath(
-                '//*[@id="app-TopBar"]/div/header/div[1]/div[4]/div/div[2]/div/div[1]/a/div[1]/span')
+        xpath_to_login_element = driver.find_element_by_xpath('//*[@id="app"]/div[1]/header/div[1]/div[4]/div/div[2]/div/div[1]/a')
         xpath_to_login_element.click()
         time.sleep(2)
         self.assertEqual(destination_url, driver.current_url,
@@ -166,3 +157,13 @@ class MainMenuSmokeTests(unittest.TestCase):
 
 # xpath_to_basket_button = driver.find_element_by_xpath(
 #     '//*[@id="app-TopBar"]/div/header/div[1]/div[4]/div/div[4]/div/div[1]/a/div[1]/span')
+ # def setUp(self):
+    #     self.driver = setup_opt(self, 1)
+    #     self.ef_driver = EventFiringWebDriver(self.driver, ScreenshotListener())
+    #
+    # def tearDown(self):
+    #     self.driver.quit()
+
+# xpath_to_login_element = \
+        #     driver.find_element_by_xpath(
+        #         '//*[@id="app-TopBar"]/div/header/div[1]/div[4]/div/div[2]/div/div[1]/a/div[1]/span')

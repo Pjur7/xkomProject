@@ -1,4 +1,5 @@
 import unittest
+import pytest
 from selenium.webdriver.support.event_firing_webdriver import EventFiringWebDriver
 from common_function.screenshots_funtion import ScreenshotListener, make_screenshot
 from common_function.start_config import chrome_options_setup as setup_opt
@@ -35,7 +36,7 @@ class SearchbyPhrasesTests(unittest.TestCase):
         driver = self.driver
         driver.get(base_url)
         search_function(self, driver, 'procesor amd ryzen')
-
-
-if __name__ == "__main__":
-    unittest.main()
+#
+#
+# if __name__ == "__main__":
+#     unittest.main()

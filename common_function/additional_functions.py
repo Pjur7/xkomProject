@@ -38,6 +38,7 @@ def check_link_function(self, driver, subtest_name, base_URL, xpath, destination
     if destination is not None:
         destination_url = destination
     if xpath_number is not None:
+        time.sleep(1)
         xpath_element = driver.find_elements_by_xpath(xpath)[xpath_number]
     if xpath_number is None:
         xpath_element = wait_for_element(driver, xpath)
@@ -110,7 +111,7 @@ def search_function(self, driver, searching_phrase):
                         logic_value = logic_value + 0
                 try:
                     self.assertGreaterEqual(logic_value, 1,
-                                            f'Product in results does not match for searching phrase: {searching_phrase} ')
+                                             f'Product in results does not match for searching phrase: {searching_phrase} ')
                 except AssertionError as error:
                     sub_assert_name = str('assert_search_failed') + str(searching_phrase)
                     make_screenshot(driver, sub_assert_name)

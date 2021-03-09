@@ -29,9 +29,11 @@ class ProductFiltersTests(unittest.TestCase):
         base_url = 'https://www.x-kom.pl/'
         driver = self.ef_driver
         driver.get(base_url)
-        laptop_button_xpath = '//*[@id="app-TopBar"]/div/header/div[2]/div/div/div/nav/ul/li[1]/a'
+        # laptop_button_xpath = '//*[@id="app-TopBar"]/div/header/div[2]/div/div/div/nav/ul/li[1]/a'
+        laptop_button_xpath = '//*[@id="app"]/div[1]/header/div[2]/div/div/div/nav/ul/li[1]/a/div[2]'
         laptop_subcategory_xpath = '//span[@title="Laptopy/Notebooki/Ultrabooki"]'
-        lenovo_filters_xpath = '//*[@id="listing-filters"]/div[2]/div/section[1]/div[1]/div/label/span[2]/span/span[1]'
+        # lenovo_filters_xpath = '//*[@id="listing-filters"]/div[2]/div/section[1]/div[1]/div/label/span[2]/span/span[1]'
+        lenovo_filters_xpath = '//*[@id="listing-filters"]/div[2]/div/section[1]/div[2]/div/label/span[1]'
         #lenovo_filters_xpath = '//*[@id="listing-filters"]/div[2]/div/section[1]/div[2]/div/label/span[' \
                                   # '2]/span/span[1] '
         # 1st subtest: laptopy i komputery link

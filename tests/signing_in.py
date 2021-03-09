@@ -22,12 +22,12 @@ class LogInTests(unittest.TestCase):
         # signing in with correct user and password; test starts from main page (https://www.x-kom.pl)
         # login = 'jp39297@wi.zut.edu.pl'
         # password = 'Testy123-123'
-        login = 'pa.jur7@gmail.com'
-        password = 'Multitesty7-7'
         login_url = 'https://www.x-kom.pl/logowanie'
         driver = self.ef_driver
         # 1st subtest:
-        with self.subTest('Your account button'):
+        login = 'pa.jur7@gmail.com'
+        password = 'Multitesty7-7'
+        with self.subTest('your account button'):
             MainMenuSmokeTests.test_login_button(self)
         input_login_data(driver, login, password)
         # 2nd subtest:
